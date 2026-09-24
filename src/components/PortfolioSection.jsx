@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import './PortfolioSection.css';
 
 const projects = [
@@ -53,7 +52,6 @@ export default function PortfolioSection({ items = projects }) {
 
   const handlePointerDown = (event) => {
     if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
-    if (event.target.closest('button')) return;
     swipeStart.current = { x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
   };
@@ -83,7 +81,7 @@ export default function PortfolioSection({ items = projects }) {
         className="portfolio-carousel"
         role="group"
         aria-roledescription="carousel"
-        aria-label="Portfolio projects. Use arrow keys or swipe to browse."
+        aria-label="Portfolio projects. Drag or swipe to browse, or use the left and right arrow keys when focused."
         tabIndex={0}
         onKeyDown={handleKeyDown}
         onPointerDown={handlePointerDown}
@@ -112,21 +110,9 @@ export default function PortfolioSection({ items = projects }) {
             );
           })}
         </div>
-        {count > 1 && (
-          <div className="portfolio-controls">
-            <button type="button" className="portfolio-arrow" aria-label="Previous project" onClick={() => move(-1)}>
-              <ArrowLeft size={20} aria-hidden="true" />
-            </button>
-            <p className="portfolio-status" aria-live="polite" aria-atomic="true">
-              <span className="portfolio-status-active">{String(active + 1).padStart(2, '0')}</span>
-              <span> / {String(count).padStart(2, '0')}</span>
-              <span className="portfolio-sr-only"> — {items[active].title}</span>
-            </p>
-            <button type="button" className="portfolio-arrow" aria-label="Next project" onClick={() => move(1)}>
-              <ArrowRight size={20} aria-hidden="true" />
-            </button>
-          </div>
-        )}
+        <p className="portfolio-sr-only" aria-live="polite" aria-atomic="true">
+          {items[active].title}, project {active + 1} of {count}
+        </p>
       </div>
     </section>
   );
