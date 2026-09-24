@@ -1,0 +1,150 @@
+/* Process Section Styles */
+.process-section {
+  padding: 100px 0;
+  background-color: #FFFFFF;
+}
+
+.process-container {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: flex-start;
+  gap: 80px;
+}
+
+/* Left Column */
+.process-main-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  color: #0F172A;
+  margin-bottom: 36px;
+}
+
+.process-main-title .highlight-purple {
+  color: #9333EA;
+}
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-item {
+  padding: 22px 0 14px 0;
+  border-bottom: 1.5px solid #94A3B8;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #1E293B;
+  transition: color var(--transition-fast, 0.2s ease), border-color var(--transition-fast, 0.2s ease);
+}
+
+.service-item:hover {
+  color: #2563EB;
+  border-bottom-color: #2563EB;
+}
+
+.service-item-text {
+  letter-spacing: -0.01em;
+}
+
+/* Right Column (Steps divided in 2, scroll to see the rest) */
+.process-right-col {
+  position: relative;
+}
+
+.steps-timeline-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 28px;
+  position: relative;
+  height: 310px;
+}
+
+.timeline-cyan-line {
+  width: 4px;
+  background-color: #2F9AE0;
+  border-radius: 4px;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.steps-scroll-container {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 20px;
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #2F9AE0 #F1F5F9;
+}
+
+.steps-scroll-container:focus-visible {
+  outline: 2px solid #2F9AE0;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Custom Scrollbar for Chrome, Safari, Edge */
+.steps-scroll-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.steps-scroll-container::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+
+.steps-scroll-container::-webkit-scrollbar-thumb {
+  background: #2F9AE0;
+  border-radius: 4px;
+}
+
+.steps-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #0284C7;
+}
+
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding-bottom: 8px;
+}
+
+.step-card {
+  position: relative;
+  scroll-snap-align: start;
+}
+
+.step-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #2F9AE0;
+  margin-bottom: 12px;
+  letter-spacing: -0.015em;
+}
+
+.step-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+@media (max-width: 992px) {
+  .process-container {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .process-main-title {
+    font-size: 2.2rem;
+  }
+
+  .steps-timeline-wrapper {
+    height: 330px;
+  }
+}
+
