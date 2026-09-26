@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { Pause, Play, RotateCcw } from 'lucide-react';
+import { Pause, Play } from 'lucide-react';
 import { drawFlight, FLIGHT_TIMING } from './rocketScene';
 import './RocketSection.css';
 
@@ -11,7 +11,6 @@ export default function RocketSection() {
   const controlsRef = useRef(null);
   const [paused, setPaused] = useState(false);
   const [phase, setPhase] = useState('idle');
-  const [run, setRun] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   useEffect(() => {
@@ -42,6 +41,8 @@ export default function RocketSection() {
     let height = 0;
     let inView = false;
     let userPaused = false;
+    let started = false;
+    let launchTimer = null;
     let currentPhase = 'idle';
     const clock = { time: 0 };
     gsap.set(message, { opacity: 0, y: 18 });
@@ -65,8 +66,6 @@ export default function RocketSection() {
     timeline.to(message, { opacity: 1, y: 0, duration: 2.5, ease: 'power2.out' }, FLIGHT_TIMING.reveal);
 
     const resize = () => {
-      // clientWidth ignores the existing desktop page zoom; canvas and text
-      // consequently share the same coordinate space at every breakpoint.
       width = section.clientWidth;
       height = section.clientHeight;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -80,7 +79,18 @@ export default function RocketSection() {
     resizeObserver.observe(section);
 
     const syncPlayback = () => {
-      if (inView && !document.hidden && !userPaused) timeline.play();
+      const canPlay = inView && !document.hidden && !userPaused;
+      if (canPlay && !started && launchTimer === null) {
+        launchTimer = window.setTimeout(() => {
+          launchTimer = null;
+          started = true;
+          syncPlayback();
+        }, 1500);
+      } else if (!canPlay && launchTimer !== null) {
+        window.clearTimeout(launchTimer);
+        launchTimer = null;
+      }
+      if (canPlay && started) timeline.play();
       else timeline.pause();
     };
     const observer = new IntersectionObserver(([entry]) => {
@@ -98,13 +108,14 @@ export default function RocketSection() {
     };
 
     return () => {
+      if (launchTimer !== null) window.clearTimeout(launchTimer);
       timeline.kill();
       observer.disconnect();
       resizeObserver.disconnect();
       document.removeEventListener('visibilitychange', syncPlayback);
       controlsRef.current = null;
     };
-  }, [run, reducedMotion]);
+  }, [reducedMotion]);
 
   return (
     <section className="rocket-section" id="blast" ref={sectionRef} aria-labelledby="blast-title" data-phase={reducedMotion ? 'done' : phase}>
@@ -112,21 +123,11 @@ export default function RocketSection() {
       <div className="rocket-message" ref={messageRef}>
         <h2 id="blast-title">Blast your ideas<br />with <span>JADIDULU</span></h2>
       </div>
-      {!reducedMotion && (
+      {!reducedMotion && phase !== 'idle' && phase !== 'done' && (
         <div className="rocket-controls">
-          {phase !== 'done' && (
-            <button type="button" onClick={() => controlsRef.current?.toggle()} aria-label={paused ? 'Resume animation' : 'Pause animation'}>
-              {paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
-              <span>{paused ? 'Resume' : 'Pause'}</span>
-            </button>
-          )}
-          <button type="button" onClick={() => {
-            setPaused(false);
-            setPhase('idle');
-            setRun((value) => value + 1);
-          }} aria-label="Replay rocket animation">
-            <RotateCcw size={15} aria-hidden="true" />
-            <span>Replay</span>
+          <button type="button" onClick={() => controlsRef.current?.toggle()} aria-label={paused ? 'Resume animation' : 'Pause animation'}>
+            {paused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
+            <span>{paused ? 'Resume' : 'Pause'}</span>
           </button>
         </div>
       )}

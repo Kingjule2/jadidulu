@@ -110,8 +110,6 @@ export function drawFlight(ctx, width, height, time) {
   const ground = groundLevel(height) + camera;
   const groundOpacity = clamp((FLIGHT_TIMING.reveal - time) / 1.4, 0, 1);
   ctx.globalAlpha = groundOpacity;
-  ctx.fillStyle = '#e6ebf3';
-  ctx.fillRect(0, ground, width, height);
   ctx.strokeStyle = '#cbd5e1';
   ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(0, ground); ctx.lineTo(width, ground); ctx.stroke();

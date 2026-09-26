@@ -2,12 +2,11 @@
   position: relative;
   isolation: isolate;
   contain: paint;
-  width: 1280px;
+  width: min(1280px, calc(100% - 48px));
   height: 500px;
   margin: 0 auto 102px;
   overflow: hidden;
   border-radius: 16px;
-  background: #f0f3f8;
   color: #0f172a;
 }
 
@@ -70,12 +69,12 @@
 .rocket-controls button:hover { background: #e4edfc; color: #1d4ed8; }
 .rocket-controls button:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
 
-@media (max-width: 1024px) {
-  .rocket-section { width: min(90%, 700px); height: 440px; margin-bottom: 80px; }
+@media (max-width: 900px) {
+  .rocket-section { width: min(760px, calc(100% - 48px)); height: 440px; margin-bottom: 80px; }
 }
 
 @media (max-width: 600px) {
-  .rocket-section { height: 390px; }
+  .rocket-section { width: calc(100% - 40px); height: 390px; }
   .rocket-message { padding-inline: 16px; }
   .rocket-message h2 { font-size: clamp(28px, 7.5vw, 42px); }
   .rocket-controls { right: 12px; bottom: 12px; }

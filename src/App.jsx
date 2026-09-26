@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import PortfolioSection from './components/PortfolioSection';
 import FaqSection from './components/FaqSection';
 import RocketSection from './components/RocketSection';
@@ -33,36 +34,35 @@ const services = [
 ];
 
 function App() {
-  const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [processPage, setProcessPage] = useState(0);
 
-  useEffect(() => {
-    const updateWidth = () => setViewportWidth(window.innerWidth);
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
-
-  const desktopZoom = viewportWidth > 1024 && viewportWidth < 1440
-    ? viewportWidth / 1440
-    : undefined;
-
   return (
-    <div className="figma-page" style={desktopZoom ? { width: 1440, zoom: desktopZoom } : undefined}>
+    <div className="figma-page">
       <header className="site-header" id="top">
         <a className="site-logo" href="#top" aria-label="Jadidulu home">
           <img src={asset('frame1.png')} alt="Jadidulu" />
         </a>
-        <nav className="site-nav" aria-label="Main navigation">
-          <a href="#about">About Us</a>
-          <a href="#how-we-work">How We Work</a>
-          <a href="#portfolio">Our Work</a>
-          <a href="#faq">FAQ</a>
+        <nav className={`site-nav${menuOpen ? ' is-open' : ''}`} id="site-nav" aria-label="Main navigation">
+          <a href="#about" onClick={() => setMenuOpen(false)}>About Us</a>
+          <a href="#how-we-work" onClick={() => setMenuOpen(false)}>How We Work</a>
+          <a href="#portfolio" onClick={() => setMenuOpen(false)}>Our Work</a>
+          <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
         </nav>
         <button className="header-cta" type="button">
           Bring Your Idea
         </button>
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-controls="site-nav"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </header>
-
       <main>
         <section className="hero-section" aria-labelledby="hero-title">
           <img className="hero-wave" src={asset('vector2.svg')} alt="" aria-hidden="true" />
@@ -127,7 +127,7 @@ function App() {
               className="process-steps"
               role="region"
               tabIndex={0}
-              aria-label="How we work steps. Scroll to read the next two steps."
+              aria-label="Four steps in how we work"
               onScroll={(event) => {
                 const element = event.currentTarget;
                 setProcessPage(element.scrollTop >= element.clientHeight / 2 ? 1 : 0);

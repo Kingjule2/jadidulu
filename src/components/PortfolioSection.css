@@ -141,23 +141,31 @@
 
 @media (max-width: 600px) {
   .portfolio-carousel {
-    --portfolio-shift: max(170px, 44vw);
-    height: 420px;
+    --portfolio-shift: 50vw;
+    height: 480px;
     margin-top: 24px;
   }
 
   .portfolio-card {
-    top: 50%;
-    width: min(328px, 76%);
-    height: 364px;
+    width: min(400px, 88%);
+    height: 420px;
     padding: 7px;
   }
 
   .portfolio-card-image { height: 53%; }
   .portfolio-card-content { padding: 13px 11px; }
-  .portfolio-card-content h3 { font-size: 16px; -webkit-line-clamp: 3; }
-  .portfolio-card-content p { font-size: 12px; line-height: 1.45; }
-  .portfolio-card-category { left: 9px; bottom: 9px; font-size: 10px; }
+  .portfolio-card-content h3 { font-size: 17px; -webkit-line-clamp: 3; }
+  .portfolio-card-content p {
+    display: block;
+    overflow: visible;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .portfolio-card-category { left: 9px; bottom: 9px; font-size: 12px; }
+}
+
+@media (max-width: 320px) {
+  .portfolio-card-image { height: 45%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
