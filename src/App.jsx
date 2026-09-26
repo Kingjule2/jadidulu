@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PortfolioSection from './components/PortfolioSection';
 import FaqSection from './components/FaqSection';
+import RocketSection from './components/RocketSection';
 import './App.css';
 
 const asset = (name) => '/figma/' + name;
@@ -147,6 +148,7 @@ function App() {
         </section>
 
         <PortfolioSection />
+        <RocketSection />
         <FaqSection />
       </main>
     </div>
