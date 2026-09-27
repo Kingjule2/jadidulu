@@ -20,11 +20,7 @@ const faqs = [
   },
   {
     question: 'What’s the difference between a prototype and a finished app?',
-    answer: 'That’s completely fine. We start by understanding the context, users, needs, and constraints before exploring possible solution directions.',
-  },
-  {
-    question: 'Can the prototype be developed into a real product?',
-    answer: 'Yes. Once the idea is clear enough and worth pursuing, the project can continue into development.',
+    answer: 'A prototype is a clickable preview used to test the idea, flow, and design. A finished app is built, tested, and ready for people to use.',
   },
   {
     question: 'What should I prepare before the first discussion?',
@@ -33,7 +29,7 @@ const faqs = [
 ];
 
 export default function FaqSection() {
-  const [openItems, setOpenItems] = useState(() => faqs.map((_, index) => index));
+  const [openItems, setOpenItems] = useState([]);
 
   const toggleItem = (index) => {
     setOpenItems((current) => current.includes(index)
@@ -43,7 +39,7 @@ export default function FaqSection() {
 
   return (
     <section className="faq-section" id="faq" aria-labelledby="faq-title">
-      <h2 id="faq-title">Frequently Asked Question</h2>
+      <h2 id="faq-title">Frequently Asked Questions</h2>
       <div className="faq-list">
         {faqs.map((faq, index) => {
           const isOpen = openItems.includes(index);
@@ -56,10 +52,11 @@ export default function FaqSection() {
                 aria-controls={'faq-answer-' + index}
                 onClick={() => toggleItem(index)}
               >
-                <span>{faq.question}</span>
-                <img src="/figma/fi-rr-angle-small-right.svg" alt="" />
+                <span className="faq-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <span className="faq-question-text">{faq.question}</span>
+                <span className={`faq-icon${isOpen ? ' faq-icon-open' : ''}`} aria-hidden="true" />
               </button>
-              {isOpen && <p className="faq-answer" id={'faq-answer-' + index}>{faq.answer}</p>}
+              <p className="faq-answer" id={'faq-answer-' + index} hidden={!isOpen}>{faq.answer}</p>
             </div>
           );
         })}
