@@ -17,7 +17,7 @@ export default function PortfolioSection() {
   return (
     <section className="portfolio-section" id="portfolio" aria-labelledby="portfolio-title">
       <div className="portfolio-content">
-        <div className="portfolio-intro">
+        <div className="portfolio-intro" data-scroll-reveal="rise">
           <h2 id="portfolio-title">See What Our Team Has Built</h2>
           <p>Explore real products we’ve designed and built from early ideas to working digital experiences.</p>
           <span className="portfolio-overview-label">
@@ -30,7 +30,7 @@ export default function PortfolioSection() {
         </div>
         <div className="portfolio-projects">
           {projects.map((project) => (
-            <article className="portfolio-project" key={project.name}>
+            <article className="portfolio-project" data-scroll-reveal="rise" key={project.name}>
               <img className="portfolio-project-logo" src={project.logo} alt="" loading="lazy" />
               <h3>{project.name}</h3>
               <p>{project.description}</p>

@@ -39,8 +39,8 @@ export default function FaqSection() {
 
   return (
     <section className="faq-section" id="faq" aria-labelledby="faq-title">
-      <h2 id="faq-title">Frequently Asked Questions</h2>
-      <div className="faq-list">
+      <h2 id="faq-title" data-scroll-reveal="rise">Frequently Asked Questions</h2>
+      <div className="faq-list" data-scroll-reveal="soft">
         {faqs.map((faq, index) => {
           const isOpen = openItems.includes(index);
           return (

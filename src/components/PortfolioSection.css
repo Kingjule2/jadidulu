@@ -190,4 +190,9 @@
   .portfolio-project {
     min-height: 290px;
   }
+
+  .portfolio-project p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
 }

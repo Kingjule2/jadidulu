@@ -33,6 +33,7 @@ typography:
 rounded:
   control: "4px"
   card: "9px"
+  process-card: "8px"
   planning-card: "16px"
   pill: "40px"
 spacing:
@@ -103,13 +104,17 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 
 ## Layout
 
-The desktop frame is at most 1440px wide, with content containers around 1248–1280px. The header is 84px high; the hero, planning banner, solution, portfolio, and closing invitation follow the Figma proportions. Four process cards share a horizontal, keyboard-scrollable row that clips the final card at desktop widths. Below 800px the process steps stack. Navigation collapses below 900px and portfolio cards stack below 600px. Spacing uses the `compact`, `standard`, `section-gap`, and `section-padding` scale where appropriate.
+The desktop frame is at most 1440px wide, with content containers around 1248–1280px. The header is 84px high; the hero, planning banner, solution, portfolio, and closing invitation follow the Figma proportions. Four process cards share a horizontal, keyboard-scrollable row that clips the final card above 800px; they form a two-column tablet grid from 601–800px and stack on narrower phones. Navigation collapses at 900px and portfolio cards stack at 600px. Mobile header controls are at least 44px tall; supporting card and FAQ copy scales up for phone readability. Spacing uses the `compact`, `standard`, `section-gap`, and `section-padding` scale where appropriate.
 
 The desktop footer shares the header logo's left gutter, centers its links independently of the copyright, and keeps the copyright on the right. Below 1100px the links use a centered second row; below 680px the footer stacks vertically.
 
 ## Elevation & Depth
 
 Flat white cards and fine borders do the structural work; the planning card is translucent white over the blue illustration. The exported backgrounds carry the soft atmosphere. No generic drop shadow is part of the system.
+
+## Motion
+
+On first load, the header controls settle in, the hero headline resolves through an early crop-and-rise, and its copy, actions, and exported wave arrive in sequence. As sections enter the viewport, the planning card and solution artwork move in from opposite sides, supporting headings and portfolio cards settle upward, and the process cards resolve through a cropped reveal with a capped stagger. Entrances now take roughly 1–2.2 seconds with gentler easing; the headline's mask clears early so its copy stays legible while the rest of the animation continues. Scroll entrances play once per element; content stays visible if scripting or IntersectionObserver is unavailable. `prefers-reduced-motion: reduce` keeps the page static.
 
 ## Shapes
 
@@ -124,7 +129,7 @@ Actions use small rectangular corners (`control`); portfolio cards use softly ro
 - **Focus:** A visible Emphasis Blue outline; in-page scrolling respects reduced-motion settings.
 
 ### Cards / Containers
-- **Process:** Four illustrated, copy-bearing cards in a scrollable desktop row; stacked in source order on narrow screens.
+- **Process:** Four illustrated, copy-bearing cards with a 1px Quiet Rule border and 8px corners in a scrollable desktop row; stacked in source order on narrow screens.
 - **Portfolio:** Two Paper cards for Jaga Anabul and Vclass with their actual exported logos. Do not fabricate projects.
 
 ### Navigation

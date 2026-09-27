@@ -27,12 +27,12 @@ export default function ProcessSection() {
   return (
     <section className="process-section" id="how-we-work" aria-labelledby="process-title">
       <div className="process-section-inner">
-        <h2 id="process-title">How We Turn Ideas Into Something <span>Buildable</span></h2>
+        <h2 id="process-title" data-scroll-reveal="rise">How We Turn Ideas Into Something <span>Buildable</span></h2>
         <p className="process-section-intro">We turn rough ideas into clear product direction, user flows, and prototypes you can validate and build.</p>
-        <div className="process-section-scroll" role="region" tabIndex={0} aria-label="How we work: scroll horizontally to see all four steps">
+        <div className="process-section-scroll" role="region" tabIndex={0} aria-label="How we work: four steps">
           <div className="process-section-cards">
             {steps.map((step) => (
-              <article className="process-section-card" key={step.title}>
+              <article className="process-section-card" data-scroll-reveal="form" key={step.title}>
                 <img src={step.image} alt="" width="418" height="236" />
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>

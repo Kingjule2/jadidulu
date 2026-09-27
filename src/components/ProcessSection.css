@@ -59,7 +59,8 @@
   min-height: 390px;
   padding: 16px 20px 24px;
   background: #fdfdfd;
-  border: 1px solid #fafafa;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
 }
 
 .process-section .process-section-card img {
@@ -105,6 +106,7 @@
 
   .process-section .process-section-cards {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
     gap: 20px;
   }
@@ -116,5 +118,20 @@
   .process-section .process-section-card img {
     height: auto;
     aspect-ratio: 2 / 1;
+  }
+
+  .process-section .process-section-card p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 600px) {
+  .process-section .process-section-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .process-section .process-section-card p {
+    font-size: 16px;
   }
 }

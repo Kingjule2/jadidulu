@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronRight, Menu, X } from 'lucide-react';
 import ProcessSection from './components/ProcessSection';
 import PortfolioSection from './components/PortfolioSection';
@@ -9,6 +9,21 @@ const image = (name) => `/figma/updated/${name}`;
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+
+    document.querySelectorAll('[data-scroll-reveal]').forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
 
   return (
     <div className="figma-page">
@@ -55,7 +70,7 @@ function App() {
         </section>
 
         <section className="problem-section" id="about" aria-labelledby="problem-title">
-          <div className="problem-card">
+          <div className="problem-card" data-scroll-reveal="side">
             <p className="problem-eyebrow">Still Stuck in Planning?</p>
             <h2 id="problem-title">You Have the Idea. But It Still Feels Too Unclear to Build.</h2>
             <p>You’ve spent time thinking it through, discussing it, and trying to move it forward. But the idea still feels too uncertain to confidently take the next step. What’s getting in the way?</p>
@@ -65,12 +80,12 @@ function App() {
 
         <section className="solution-section" id="solution" aria-labelledby="solution-title">
           <div className="solution-inner">
-            <div className="solution-copy">
+            <div className="solution-copy" data-scroll-reveal="rise">
               <h2 id="solution-title">From a Rough Idea to Something You Can Actually <span>Build</span></h2>
               <p>Tell us what you want to build or the problem you want to solve. We’ll help turn it into a clear product direction, user flow, and clickable prototype you can test and validate before committing to development.</p>
               <p className="solution-emphasis">And when the direction is clear enough, we can help take it further into a working product.</p>
             </div>
-            <img className="solution-image" src={image('solution-illustration.png')} alt="An idea becoming a product flow and a clickable prototype" loading="lazy" />
+            <img className="solution-image" data-scroll-reveal="side" src={image('solution-illustration.png')} alt="An idea becoming a product flow and a clickable prototype" loading="lazy" />
           </div>
         </section>
 
@@ -80,7 +95,7 @@ function App() {
 
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <p className="contact-eyebrow">Let’s Work Together</p>
-          <h2 id="contact-title">Have an Idea? Let’s Make It Buildable</h2>
+          <h2 id="contact-title" data-scroll-reveal="rise">Have an Idea? Let’s Make It Buildable</h2>
           <p>Bring your idea. We’ll help make it clear and buildable.</p>
           <a
             className="contact-cta"
