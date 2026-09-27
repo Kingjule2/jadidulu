@@ -14,7 +14,6 @@
 .process-section h2 {
   margin: 0 0 16px;
   color: #141414;
-  font-family: Geist, sans-serif;
   font-size: 36px;
   font-weight: 700;
   line-height: 1.25;
@@ -58,7 +57,7 @@
   flex: 0 0 360px;
   min-height: 390px;
   padding: 16px 20px 24px;
-  background: #fdfdfd;
+  background: #fff;
   border: 1px solid #e8e8e8;
   border-radius: 8px;
 }
@@ -72,7 +71,6 @@
 .process-section .process-section-card h3 {
   margin: 24px 0 12px;
   color: #141414;
-  font-family: Geist, sans-serif;
   font-size: 23px;
   font-weight: 700;
   line-height: 1.25;
@@ -86,7 +84,7 @@
   line-height: 1.45;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
   .process-section {
     padding: 64px 0;
   }
@@ -117,6 +115,7 @@
 
   .process-section .process-section-card img {
     height: auto;
+    max-height: 190px;
     aspect-ratio: 2 / 1;
   }
 

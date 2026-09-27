@@ -32,7 +32,7 @@ export default function ProcessSection() {
         <div className="process-section-scroll" role="region" tabIndex={0} aria-label="How we work: four steps">
           <div className="process-section-cards">
             {steps.map((step) => (
-              <article className="process-section-card" data-scroll-reveal="form" key={step.title}>
+              <article className="process-section-card" key={step.title}>
                 <img src={step.image} alt="" width="418" height="236" />
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>

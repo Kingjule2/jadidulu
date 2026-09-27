@@ -1,9 +1,14 @@
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { useEffect, useState } from 'react';
 import { ChevronRight, Menu, X } from 'lucide-react';
 import ProcessSection from './components/ProcessSection';
 import PortfolioSection from './components/PortfolioSection';
 import FaqSection from './components/FaqSection';
 import './App.css';
+
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const image = (name) => `/figma/updated/${name}`;
 
@@ -24,9 +29,76 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    // Keep native touch scrolling and honor reduced-motion; only fine-pointer
+    // desktop scrolling needs ScrollSmoother's transformed content.
+    const media = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+    let smoother;
+    let hashFrame;
+
+    const alignHash = () => {
+      hashFrame = requestAnimationFrame(() => {
+        hashFrame = requestAnimationFrame(() => {
+          const target = document.getElementById(window.location.hash.slice(1));
+          if (target && smoother) smoother.scrollTo(target, false, 'top 84px');
+        });
+      });
+    };
+
+    const updateSmoother = () => {
+      cancelAnimationFrame(hashFrame);
+      window.removeEventListener('load', alignHash);
+      smoother?.kill();
+      smoother = undefined;
+      document.documentElement.style.scrollBehavior = '';
+      document.querySelector('.figma-page').classList.toggle('smooth-active', media.matches);
+
+      if (media.matches) {
+        document.documentElement.style.scrollBehavior = 'auto';
+        smoother = ScrollSmoother.create({
+          wrapper: '#smooth-wrapper',
+          content: '#smooth-content',
+          smooth: 0.8,
+          smoothTouch: 0,
+        });
+
+        // Wait until native hash restoration completes before aligning through GSAP.
+        if (window.location.hash) {
+          if (document.readyState === 'complete') alignHash();
+          else window.addEventListener('load', alignHash, { once: true });
+        }
+      }
+    };
+
+    updateSmoother();
+    media.addEventListener('change', updateSmoother);
+    return () => {
+      media.removeEventListener('change', updateSmoother);
+      window.removeEventListener('load', alignHash);
+      cancelAnimationFrame(hashFrame);
+      smoother?.kill();
+      document.documentElement.style.scrollBehavior = '';
+      document.querySelector('.figma-page').classList.remove('smooth-active');
+    };
+  }, []);
+
+  const handleAnchorClick = (event) => {
+    const link = event.target.closest('a[href^="#"]');
+    const smoother = ScrollSmoother.get();
+    if (!link || !smoother) return;
+
+    const hash = link.getAttribute('href');
+    const target = document.getElementById(hash.slice(1));
+    if (!target) return;
+
+    event.preventDefault();
+    window.history.pushState(null, '', hash);
+    smoother.scrollTo(hash === '#top' ? 0 : target, true, hash === '#top' ? undefined : 'top 84px');
+  };
+
 
   return (
-    <div className="figma-page">
+    <div className="figma-page" onClickCapture={handleAnchorClick}>
       <header className="site-header" id="top">
         <a className="site-logo" href="#top" aria-label="Jadidulu home">
           <img src={image('logo.png')} alt="jadidulu" />
@@ -50,6 +122,8 @@ function App() {
         </button>
       </header>
 
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
       <main>
         <section className="hero-section" aria-labelledby="hero-title">
           <div className="hero-content">
@@ -120,6 +194,8 @@ function App() {
         </nav>
         <small>© 2026 PT Kreasi Perangkat Lunak. All rights reserved.</small>
       </footer>
+        </div>
+      </div>
     </div>
   );
 }

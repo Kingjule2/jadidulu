@@ -11,22 +11,22 @@ colors:
   rule: "#e8e8e8"
 typography:
   display:
-    fontFamily: "Geist, 'Plus Jakarta Sans', sans-serif"
+    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "48px"
     fontWeight: 700
     lineHeight: 1.25
   headline:
-    fontFamily: "Geist, 'Plus Jakarta Sans', sans-serif"
+    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "36px"
     fontWeight: 700
     lineHeight: 1.25
   body:
-    fontFamily: "'Plus Jakarta Sans', sans-serif"
+    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "18px"
     fontWeight: 500
     lineHeight: 1.5
   label:
-    fontFamily: "'Plus Jakarta Sans', sans-serif"
+    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "15px"
     fontWeight: 700
     lineHeight: 1.5
@@ -73,7 +73,7 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 
 **Key Characteristics:**
 - Blue action and emphasis colors against white and warm-white surfaces.
-- Geist headings paired with Plus Jakarta Sans body copy.
+- SF Pro system typography on Apple devices with a system-sans fallback elsewhere.
 - Figma-exported illustrations and background waves rather than substitute graphics.
 
 ## Colors
@@ -93,8 +93,7 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 
 ## Typography
 
-**Display Font:** Geist, with Plus Jakarta Sans fallback.  
-**Body Font:** Plus Jakarta Sans, with sans-serif fallback.
+**Site font:** SF Pro Text/Display, falling back to the Apple system font and then Segoe UI/system sans on devices without SF Pro. Apple does not license bundling the SF Pro font files for this website; the site does not download or redistribute them.
 
 ### Hierarchy
 - **Display** (`display`): Hero and closing invitation.
@@ -104,7 +103,7 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 
 ## Layout
 
-The desktop frame is at most 1440px wide, with content containers around 1248–1280px. The header is 84px high; the hero, planning banner, solution, portfolio, and closing invitation follow the Figma proportions. Four process cards share a horizontal, keyboard-scrollable row that clips the final card above 800px; they form a two-column tablet grid from 601–800px and stack on narrower phones. Navigation collapses at 900px and portfolio cards stack at 600px. Mobile header controls are at least 44px tall; supporting card and FAQ copy scales up for phone readability. Spacing uses the `compact`, `standard`, `section-gap`, and `section-padding` scale where appropriate.
+The page fills the viewport at all desktop widths; content containers stay around 1248–1280px. The header is 84px high and stays visible during scrolling. The hero uses fluid padding rather than a fixed minimum height to avoid excessive empty space on laptops. Four process cards share a horizontal, keyboard-scrollable row above 1200px; they form a complete two-column grid from 601–1200px and stack on narrower phones. Navigation collapses at 900px and portfolio cards stack at 600px. Mobile header controls are at least 44px tall; supporting card and FAQ copy scales up for phone readability. Spacing uses the `compact`, `standard`, `section-gap`, and `section-padding` scale where appropriate.
 
 The desktop footer shares the header logo's left gutter, centers its links independently of the copyright, and keeps the copyright on the right. Below 1100px the links use a centered second row; below 680px the footer stacks vertically.
 
@@ -114,7 +113,7 @@ Flat white cards and fine borders do the structural work; the planning card is t
 
 ## Motion
 
-On first load, the header controls settle in, the hero headline resolves through an early crop-and-rise, and its copy, actions, and exported wave arrive in sequence. As sections enter the viewport, the planning card and solution artwork move in from opposite sides, supporting headings and portfolio cards settle upward, and the process cards resolve through a cropped reveal with a capped stagger. Entrances now take roughly 1–2.2 seconds with gentler easing; the headline's mask clears early so its copy stays legible while the rest of the animation continues. Scroll entrances play once per element; content stays visible if scripting or IntersectionObserver is unavailable. `prefers-reduced-motion: reduce` keeps the page static.
+On first load, the header controls settle in, the hero headline resolves through an early crop-and-rise, and its copy, actions, and exported wave arrive in sequence. The planning card, solution artwork, headings, and portfolio cards enter once as they come into view. Process card borders remain stationary and 1px throughout scrolling. ScrollSmoother and ScrollTrigger provide native-backed smooth desktop scrolling for fine pointers, with the header fixed above the transformed content; touch screens and reduced-motion users retain native scrolling. Content stays visible if scripting or IntersectionObserver is unavailable. `prefers-reduced-motion: reduce` keeps the page static.
 
 ## Shapes
 
@@ -129,12 +128,12 @@ Actions use small rectangular corners (`control`); portfolio cards use softly ro
 - **Focus:** A visible Emphasis Blue outline; in-page scrolling respects reduced-motion settings.
 
 ### Cards / Containers
-- **Process:** Four illustrated, copy-bearing cards with a 1px Quiet Rule border and 8px corners in a scrollable desktop row; stacked in source order on narrow screens.
+- **Process:** Four illustrated, copy-bearing cards with stationary 1px Quiet Rule borders and 8px corners; a scrollable desktop row, a two-column laptop/tablet grid, and a single-column phone layout.
 - **Portfolio:** Two Paper cards for Jaga Anabul and Vclass with their actual exported logos. Do not fabricate projects.
 
 ### Navigation
 
-The desktop header holds the logo, four section anchors, and the invitation. Narrow screens use a labeled menu control; its anchors close the menu after selection.
+The desktop header holds the logo, four section anchors, and the invitation. It remains visible while scrolling; hash links align sections below it. Narrow screens use a labeled menu control; its anchors close the menu after selection.
 
 ### FAQ
 
