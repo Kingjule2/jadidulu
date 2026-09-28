@@ -11,22 +11,22 @@ colors:
   rule: "#e8e8e8"
 typography:
   display:
-    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "Jadidulu SF Pro Display, Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "48px"
     fontWeight: 700
     lineHeight: 1.25
   headline:
-    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "Jadidulu SF Pro Display, Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "36px"
     fontWeight: 700
     lineHeight: 1.25
   body:
-    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "18px"
     fontWeight: 500
     lineHeight: 1.5
   label:
-    fontFamily: "SF Pro Text, SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "15px"
     fontWeight: 700
     lineHeight: 1.5
@@ -73,7 +73,7 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 
 **Key Characteristics:**
 - Blue action and emphasis colors against white and warm-white surfaces.
-- SF Pro system typography on Apple devices with a system-sans fallback elsewhere.
+- Self-hosted SF Pro Display for headings and SF Pro Text for body copy and controls.
 - Figma-exported illustrations and background waves rather than substitute graphics.
 
 ## Colors
@@ -93,7 +93,7 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 
 ## Typography
 
-**Site font:** SF Pro Text/Display, falling back to the Apple system font and then Segoe UI/system sans on devices without SF Pro. Apple does not license bundling the SF Pro font files for this website; the site does not download or redistribute them.
+**Site font:** Locally served SF Pro Text (regular, medium, semibold, bold, heavy) and SF Pro Display (bold) from [sahibjotsaggu/San-Francisco-Pro-Fonts](https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts) in `public/fonts/`. These files are not licensed for web distribution under [Apple's SF Pro terms](https://developer.apple.com/fonts/); deployment carries a licensing risk. System fonts remain fallbacks if a font fails to load.
 
 ### Hierarchy
 - **Display** (`display`): Hero and closing invitation.
