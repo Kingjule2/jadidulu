@@ -133,18 +133,18 @@ function App() {
             <div className="hero-actions">
               <a className="figma-button primary-button" href="#contact">
                 Tell Us Your Idea
-                <img src="/figma/icon-wrapper.svg" alt="" />
+                <span className="button-icon primary-icon" aria-hidden="true" />
               </a>
               <a className="figma-button outline-button" href="#how-we-work">
                 See How We Work
-                <img src="/figma/icon-wrapper1.svg" alt="" />
+                <span className="button-icon outline-icon" aria-hidden="true" />
               </a>
             </div>
           </div>
         </section>
 
         <section className="problem-section" id="about" aria-labelledby="problem-title">
-          <div className="problem-card" data-scroll-reveal="side">
+          <div className="problem-card" data-scroll-reveal="soft">
             <p className="problem-eyebrow">Still Stuck in Planning?</p>
             <h2 id="problem-title">You Have the Idea. But It Still Feels Too Unclear to Build.</h2>
             <p>You’ve spent time thinking it through, discussing it, and trying to move it forward. But the idea still feels too uncertain to confidently take the next step. What’s getting in the way?</p>

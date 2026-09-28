@@ -74,7 +74,7 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 **Key Characteristics:**
 - Blue action and emphasis colors against white and warm-white surfaces.
 - Self-hosted SF Pro Display for headings and SF Pro Text for body copy and controls.
-- Figma-exported illustrations and background waves rather than substitute graphics.
+- The supplied black Jadidulu wordmark from `public/figma/updated/logo.png` replaces the earlier blue wordmark in header and footer; its mark is the favicon.
 
 ## Colors
 
@@ -113,7 +113,7 @@ Flat white cards and fine borders do the structural work; the planning card is t
 
 ## Motion
 
-On first load, the header controls settle in, the hero headline resolves through an early crop-and-rise, and its copy, actions, and exported wave arrive in sequence. The planning card, solution artwork, headings, and portfolio cards enter once as they come into view. Process card borders remain stationary and 1px throughout scrolling. ScrollSmoother and ScrollTrigger provide native-backed smooth desktop scrolling for fine pointers, with the header fixed above the transformed content; touch screens and reduced-motion users retain native scrolling. Content stays visible if scripting or IntersectionObserver is unavailable. `prefers-reduced-motion: reduce` keeps the page static.
+On first load, the header controls settle in, the hero headline resolves through an early crop-and-rise, and its copy, actions, and exported wave arrive in sequence. The planning card fades in without translation; solution artwork, headings, and portfolio cards enter once as they come into view. Process card borders remain stationary and 1px throughout scrolling. ScrollSmoother and ScrollTrigger provide native-backed smooth desktop scrolling for fine pointers, with the header fixed above the transformed content; touch screens and reduced-motion users retain native scrolling. Portfolio logos load eagerly so Android browsers do not defer their images behind reveal transitions. Content stays visible if scripting or IntersectionObserver is unavailable. `prefers-reduced-motion: reduce` keeps the page static.
 
 ## Shapes
 
@@ -122,8 +122,8 @@ Actions use small rectangular corners (`control`); portfolio cards use softly ro
 ## Components
 
 ### Buttons
-- **Primary:** Action Blue fill, Paper text, and the small control radius. The hero uses the Figma-exported trailing icon.
-- **Outline:** Paper fill, Emphasis Blue border and text, and its own exported icon.
+- **Primary:** Action Blue fill, Paper text, and the small control radius. The hero uses the Figma-exported trailing icon masked to the same color as the label.
+- **Outline:** Paper fill, Emphasis Blue border and text, and its exported icon masked to the same color as the label.
 - **Planning link:** Black pill on the translucent card, with a chevron.
 - **Focus:** A visible Emphasis Blue outline; in-page scrolling respects reduced-motion settings.
 

@@ -156,11 +156,17 @@
   white-space: nowrap;
 }
 
-.figma-button img { flex: none; }
+.button-icon {
+  flex: none;
+  display: block;
+  background: currentColor;
+  -webkit-mask: var(--icon-url) center / contain no-repeat;
+  mask: var(--icon-url) center / contain no-repeat;
+}
 .primary-button { background: #0c74b9; color: #fff; }
-.primary-button img { width: 16px; height: 16px; }
+.primary-icon { width: 16px; height: 16px; --icon-url: url('/figma/icon-wrapper.svg'); }
 .outline-button { background: #fff; color: #0b709a; }
-.outline-button img { width: 20px; height: 20px; }
+.outline-icon { width: 20px; height: 20px; --icon-url: url('/figma/icon-wrapper1.svg'); }
 
 .problem-section {
   min-height: 565px;
@@ -400,7 +406,6 @@ main > section[id] {
     animation: reveal-side 1.6s cubic-bezier(.45, 0, .55, 1) both;
   }
 
-  .problem-card[data-scroll-reveal="side"] { --reveal-x: -28px; }
   .solution-image[data-scroll-reveal="side"] { --reveal-x: 28px; }
 
   .portfolio-project:nth-child(2) { --reveal-delay: 240ms; }
@@ -408,6 +413,14 @@ main > section[id] {
 
   [data-scroll-reveal="soft"].is-visible {
     animation: reveal-soft 1.25s cubic-bezier(.45, 0, .55, 1) both;
+  }
+  .problem-card[data-scroll-reveal="soft"].is-visible {
+    animation: reveal-fade 800ms ease-out both;
+  }
+
+  @keyframes reveal-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   @keyframes reveal-rise {
