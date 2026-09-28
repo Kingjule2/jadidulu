@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import './ProcessSection.css';
 
 const steps = [
@@ -24,16 +25,41 @@ const steps = [
 ];
 
 export default function ProcessSection() {
+  const drag = useRef(null);
+
+  const handlePointerDown = (event) => {
+    const scroller = event.currentTarget;
+    if (event.pointerType !== 'mouse' || event.button !== 0 || scroller.scrollWidth <= scroller.clientWidth) return;
+
+    event.preventDefault();
+    drag.current = { pointerId: event.pointerId, x: event.clientX, left: scroller.scrollLeft };
+    scroller.setPointerCapture(event.pointerId);
+    scroller.classList.add('is-dragging');
+  };
+
+  const handlePointerMove = (event) => {
+    if (drag.current?.pointerId !== event.pointerId) return;
+    event.currentTarget.scrollLeft = drag.current.left + drag.current.x - event.clientX;
+  };
+
+  const stopDragging = (event) => {
+    if (drag.current?.pointerId !== event.pointerId) return;
+    drag.current = null;
+    const scroller = event.currentTarget;
+    scroller.classList.remove('is-dragging');
+    if (scroller.hasPointerCapture(event.pointerId)) scroller.releasePointerCapture(event.pointerId);
+  };
+
   return (
     <section className="process-section" id="how-we-work" aria-labelledby="process-title">
       <div className="process-section-inner">
-        <h2 id="process-title" data-scroll-reveal="rise">How We Turn Ideas Into Something <span>Buildable</span></h2>
+        <h2 id="process-title">How We Turn Ideas Into Something <span className="section-accent">Buildable</span></h2>
         <p className="process-section-intro">We turn rough ideas into clear product direction, user flows, and prototypes you can validate and build.</p>
-        <div className="process-section-scroll" role="region" tabIndex={0} aria-label="How we work: four steps">
+        <div className="process-section-scroll" role="region" tabIndex={0} aria-label="How we work: four steps" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={stopDragging} onPointerCancel={stopDragging} onLostPointerCapture={stopDragging}>
           <div className="process-section-cards">
             {steps.map((step) => (
-              <article className="process-section-card" key={step.title}>
-                <img src={step.image} alt="" width="418" height="236" />
+              <article className="process-section-card" data-scroll-reveal="step" key={step.title}>
+                <img src={step.image} alt="" width="418" height="236" draggable={false} />
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
               </article>

@@ -7,7 +7,6 @@
 
 .process-section .process-section-inner {
   width: calc(100% - 2 * clamp(24px, 5.5556vw, 80px));
-  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -20,7 +19,7 @@
   letter-spacing: -0.02em;
 }
 
-.process-section h2 span {
+.process-section h2 .section-accent {
   color: #0b709a;
 }
 
@@ -36,10 +35,16 @@
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
+  cursor: grab;
 }
 
 .process-section .process-section-scroll::-webkit-scrollbar {
   display: none;
+}
+
+.process-section .process-section-scroll.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .process-section .process-section-scroll:focus-visible {
@@ -84,6 +89,12 @@
   line-height: 1.45;
 }
 
+@media (min-width: 1616px) {
+  .process-section .process-section-scroll {
+    cursor: auto;
+  }
+}
+
 @media (max-width: 1200px) {
   .process-section {
     padding: 64px 0;
@@ -100,6 +111,7 @@
   .process-section .process-section-scroll {
     width: 100%;
     overflow: visible;
+    cursor: auto;
   }
 
   .process-section .process-section-cards {

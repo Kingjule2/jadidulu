@@ -30,7 +30,7 @@ export default function PortfolioSection() {
         </div>
         <div className="portfolio-projects">
           {projects.map((project) => (
-            <article className="portfolio-project" data-scroll-reveal="rise" key={project.name}>
+            <article className="portfolio-project" data-scroll-reveal="project" key={project.name}>
               <img className="portfolio-project-logo" src={project.logo} alt="" width="76" height="76" />
               <h3>{project.name}</h3>
               <p>{project.description}</p>

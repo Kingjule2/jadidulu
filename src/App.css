@@ -169,8 +169,8 @@
 .outline-icon { width: 20px; height: 20px; --icon-url: url('/figma/icon-wrapper1.svg'); }
 
 .problem-section {
-  min-height: 565px;
-  padding: 60px max(48px, calc((100% - 1320px) / 2));
+  min-height: 566px;
+  padding: 64px clamp(48px, 4.0278vw, 58px);
   display: flex;
   align-items: center;
   background: #347ef7 url('/figma/updated/problem-background.png') center / cover no-repeat;
@@ -230,7 +230,6 @@
 .solution-inner {
   min-height: 516px;
   width: calc(100% - 2 * clamp(28px, 5.5556vw, 80px));
-  max-width: 1280px;
   margin: 0 auto;
   padding: 68px clamp(16px, 2vw, 32px);
   display: grid;
@@ -252,7 +251,7 @@
   letter-spacing: -.02em;
 }
 
-.solution-copy h2 span { color: #0c74b9; }
+.solution-copy h2 .section-accent { color: #0c74b9; }
 
 .solution-copy p {
   margin: 0;
@@ -354,42 +353,44 @@ main > section[id] {
   outline-offset: 4px;
 }
 
+.motion-line,
+.motion-line-mask { display: block; }
+
 /* Reveals are applied only after intersection; the unanimated page stays readable. */
 @media (prefers-reduced-motion: no-preference) {
   .site-logo,
   .header-cta,
   .menu-toggle {
-    animation: opening-settle 950ms cubic-bezier(.45, 0, .55, 1) both;
+    animation: opening-settle 1.2s cubic-bezier(.4, 0, .2, 1) both;
   }
 
   .hero-section::before {
-    animation: opening-wave 2.2s cubic-bezier(.45, 0, .55, 1) both;
+    animation: opening-wave 2s cubic-bezier(.4, 0, .2, 1) both;
   }
 
   .hero-eyebrow {
-    animation: opening-settle 1s cubic-bezier(.45, 0, .55, 1) both;
+    animation: opening-settle 1.15s cubic-bezier(.4, 0, .2, 1) both;
   }
 
   .hero-content h1 {
-    animation: opening-title 1.7s cubic-bezier(.45, 0, .55, 1) 160ms both;
+    animation: opening-title 1.7s cubic-bezier(.4, 0, .2, 1) 150ms both;
   }
 
   .hero-description {
-    animation: opening-settle 1.5s cubic-bezier(.45, 0, .55, 1) 320ms both;
+    animation: opening-settle 1.5s cubic-bezier(.4, 0, .2, 1) 400ms both;
   }
 
   .hero-actions {
-    animation: opening-settle 1.5s cubic-bezier(.45, 0, .55, 1) 450ms both;
+    animation: opening-settle 1.55s cubic-bezier(.4, 0, .2, 1) 580ms both;
   }
 
   @keyframes opening-title {
-    from { opacity: .8; clip-path: inset(0 0 30% 0); transform: translateY(14px); }
-    25% { clip-path: inset(0 0 0 0); }
+    from { opacity: .45; clip-path: inset(0 0 65% 0); transform: translateY(18px); }
     to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
   }
 
   @keyframes opening-settle {
-    from { opacity: .8; transform: translateY(12px); }
+    from { opacity: .65; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
@@ -399,44 +400,70 @@ main > section[id] {
   }
 
   [data-scroll-reveal="rise"].is-visible {
-    animation: reveal-rise 1.35s cubic-bezier(.45, 0, .55, 1) both;
+    animation: reveal-rise 1.35s cubic-bezier(.4, 0, .2, 1) both;
   }
 
-  [data-scroll-reveal="side"].is-visible {
-    animation: reveal-side 1.6s cubic-bezier(.45, 0, .55, 1) both;
+  .solution-image[data-scroll-reveal="image-up"].is-visible {
+    animation: reveal-image-up 1.55s cubic-bezier(.4, 0, .2, 1) both;
   }
 
-  .solution-image[data-scroll-reveal="side"] { --reveal-x: 28px; }
+  .portfolio-project[data-scroll-reveal="project"].is-visible {
+    animation: reveal-project 1.3s cubic-bezier(.4, 0, .2, 1) both;
+  }
 
-  .portfolio-project:nth-child(2) { --reveal-delay: 240ms; }
-  .portfolio-project.is-visible { animation-delay: var(--reveal-delay, 0ms); }
+  .portfolio-project:nth-child(2).is-visible { animation-delay: 260ms; }
 
   [data-scroll-reveal="soft"].is-visible {
-    animation: reveal-soft 1.25s cubic-bezier(.45, 0, .55, 1) both;
-  }
-  .problem-card[data-scroll-reveal="soft"].is-visible {
-    animation: reveal-fade 800ms ease-out both;
+    animation: reveal-soft 1.2s ease-out both;
   }
 
-  @keyframes reveal-fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .process-section-card[data-scroll-reveal="step"].is-visible {
+    animation: reveal-step 1.45s cubic-bezier(.4, 0, .2, 1) both;
+  }
+
+  .process-section-card:nth-child(2).is-visible { animation-delay: 260ms; }
+  .process-section-card:nth-child(3).is-visible { animation-delay: 520ms; }
+  .process-section-card:nth-child(4).is-visible { animation-delay: 780ms; }
+
+  @media (max-width: 1200px) {
+    .process-section-card:nth-child(2).is-visible,
+    .process-section-card:nth-child(4).is-visible { animation-delay: 200ms; }
+    .process-section-card:nth-child(3).is-visible { animation-delay: 0ms; }
+  }
+
+  @media (max-width: 600px) {
+    .process-section-card:nth-child(n).is-visible { animation-delay: 0ms; }
   }
 
   @keyframes reveal-rise {
-    from { opacity: .8; transform: translateY(18px); }
+    from { opacity: .55; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes reveal-side {
-    from { opacity: .8; transform: translateX(var(--reveal-x)); }
-    to { opacity: 1; transform: translateX(0); }
+  @keyframes reveal-image-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes reveal-project {
+    from { opacity: .45; clip-path: inset(0 0 24% 0 round 9px); transform: translateY(24px) scale(.98); }
+    to { opacity: 1; clip-path: inset(0 0 0 0 round 9px); transform: translateY(0) scale(1); }
+  }
+
+  @keyframes reveal-step {
+    from { opacity: 0; transform: translateY(48px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes reveal-soft {
     from { opacity: .8; }
     to { opacity: 1; }
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-cta { transition: background-color 150ms ease; }
+  .contact-cta:hover { transform: none; box-shadow: none; }
 }
 
 @media (max-width: 1100px) {
