@@ -257,7 +257,7 @@ function App() {
             <p className="problem-eyebrow">Still Stuck in Planning?</p>
             <h2 id="problem-title">You Have the Idea. But It Still Feels Too Unclear to Build.</h2>
             <p>You’ve spent time thinking it through, discussing it, and trying to move it forward. But the idea still feels too uncertain to confidently take the next step. What’s getting in the way?</p>
-            <a className="problem-link" href="#solution">See What’s Missing <ChevronRight size={17} aria-hidden="true" /></a>
+            <button type="button" className="problem-link">See What’s Missing <ChevronRight size={17} aria-hidden="true" /></button>
           </div>
         </section>
 
