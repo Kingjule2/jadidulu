@@ -3,12 +3,12 @@ import './PortfolioSection.css';
 const projects = [
   {
     name: 'Jaga Anabul',
-    logo: '/figma/updated/jaga-anabul-logo.png',
+    logo: '/figma/updated/jaga-anabul-logo.webp',
     description: 'A transparent fundraising platform for animal welfare.',
   },
   {
     name: 'Vclass',
-    logo: '/figma/updated/vclass-logo.png',
+    logo: '/figma/updated/vclass-logo.webp',
     description: 'An integrated digital learning and school management platform.',
   },
 ];
@@ -31,7 +31,7 @@ export default function PortfolioSection() {
         <div className="portfolio-projects">
           {projects.map((project) => (
             <article className="portfolio-project" data-scroll-reveal="project" key={project.name}>
-              <img className="portfolio-project-logo" src={project.logo} alt="" width="76" height="76" />
+              <img className="portfolio-project-logo" src={project.logo} alt="" width="76" height="76" loading="lazy" decoding="async" />
               <h3>{project.name}</h3>
               <p>{project.description}</p>
               <span className="portfolio-product-label">

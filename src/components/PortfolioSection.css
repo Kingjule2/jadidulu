@@ -2,7 +2,11 @@
   width: 100%;
   min-height: 515px;
   margin: 0;
-  background: #e8f5fc url('/figma/updated/portfolio-background.png') center 40% / cover no-repeat;
+  background: #e8f5fc;
+}
+
+.portfolio-section.is-near {
+  background: #e8f5fc url('/figma/updated/portfolio-background.webp') center 40% / cover no-repeat;
 }
 
 .portfolio-content {

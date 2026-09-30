@@ -94,7 +94,7 @@
   position: absolute;
   inset: 0;
   content: '';
-  background: url('/figma/updated/hero-wave.png') center bottom / cover no-repeat;
+  background: url('/figma/updated/hero-wave-1600.webp') center bottom / cover no-repeat;
   opacity: .2;
   pointer-events: none;
 }
@@ -173,7 +173,12 @@
   padding: 64px clamp(48px, 4.0278vw, 58px);
   display: flex;
   align-items: center;
-  background: #347ef7 url('/figma/updated/problem-background.png') center / cover no-repeat;
+  background: #347ef7;
+}
+
+.problem-section.is-near {
+  background: #347ef7 url('/figma/updated/problem-background-1700.webp') center / cover no-repeat;
+  background-image: image-set(url('/figma/updated/problem-background-1700.avif') type('image/avif'), url('/figma/updated/problem-background-1700.webp') type('image/webp'));
 }
 
 .problem-card {
@@ -275,8 +280,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f8d3df url('/figma/updated/contact-background.png') center / cover no-repeat;
+  background: #f8d3df;
   text-align: center;
+}
+
+.contact-section.is-near {
+  background: #f8d3df url('/figma/updated/contact-background.webp') center / cover no-repeat;
 }
 
 .contact-eyebrow { margin-bottom: 12px; }
@@ -360,7 +369,7 @@ main > section[id] {
 .motion-line,
 .motion-line-mask { display: block; }
 
-/* Reveals are applied only after intersection; the unanimated page stays readable. */
+/* Keep offscreen reveals in the layout, but hide their paint after the exit. */
 @media (prefers-reduced-motion: no-preference) {
   .site-logo,
   .header-cta,
@@ -403,65 +412,48 @@ main > section[id] {
     to { opacity: .2; transform: scale(1); }
   }
 
-  [data-scroll-reveal="rise"].is-visible {
-    animation: reveal-rise 1.35s cubic-bezier(.4, 0, .2, 1) both;
+  .figma-page.reveals-ready [data-scroll-reveal] {
+    opacity: 0;
+    transition: opacity .4s ease, transform .4s ease, clip-path .4s ease;
   }
 
-  .solution-image[data-scroll-reveal="image-up"].is-visible {
-    animation: reveal-image-up 1.55s cubic-bezier(.4, 0, .2, 1) both;
+  .figma-page.reveals-ready [data-scroll-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    transition-duration: 1.35s;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-delay: 0s;
   }
 
-  .portfolio-project[data-scroll-reveal="project"].is-visible {
-    animation: reveal-project 1.3s cubic-bezier(.4, 0, .2, 1) both;
+  .figma-page.reveals-ready [data-scroll-reveal="rise"] { transform: translateY(20px); }
+  .figma-page.reveals-ready [data-scroll-reveal="image-up"] { transform: translateY(30px); }
+  .figma-page.reveals-ready [data-scroll-reveal="step"] { transform: translateY(48px); }
+
+  .figma-page.reveals-ready [data-scroll-reveal="project"] {
+    clip-path: inset(0 0 24% 0 round 9px);
+    transform: translateY(24px) scale(.98);
   }
 
-  .portfolio-project:nth-child(2).is-visible { animation-delay: 260ms; }
-
-  [data-scroll-reveal="soft"].is-visible {
-    animation: reveal-soft 1.2s ease-out both;
+  .figma-page.reveals-ready [data-scroll-reveal="project"].is-visible {
+    clip-path: inset(0 0 0 0 round 9px);
   }
 
-  .process-section-card[data-scroll-reveal="step"].is-visible {
-    animation: reveal-step 1.45s cubic-bezier(.4, 0, .2, 1) both;
-  }
-
-  .process-section-card:nth-child(2).is-visible { animation-delay: 260ms; }
-  .process-section-card:nth-child(3).is-visible { animation-delay: 520ms; }
-  .process-section-card:nth-child(4).is-visible { animation-delay: 780ms; }
+  .figma-page.reveals-ready [data-scroll-reveal="image-up"].is-visible { transition-duration: 1.55s; }
+  .figma-page.reveals-ready [data-scroll-reveal="soft"].is-visible { transition-duration: 1.2s; }
+  .figma-page.reveals-ready [data-scroll-reveal="step"].is-visible { transition-duration: 1.45s; }
+  .figma-page.reveals-ready .portfolio-project:nth-child(2).is-visible { transition-delay: 260ms; }
+  .figma-page.reveals-ready .process-section-card:nth-child(2).is-visible { transition-delay: 260ms; }
+  .figma-page.reveals-ready .process-section-card:nth-child(3).is-visible { transition-delay: 520ms; }
+  .figma-page.reveals-ready .process-section-card:nth-child(4).is-visible { transition-delay: 780ms; }
 
   @media (max-width: 1200px) {
-    .process-section-card:nth-child(2).is-visible,
-    .process-section-card:nth-child(4).is-visible { animation-delay: 200ms; }
-    .process-section-card:nth-child(3).is-visible { animation-delay: 0ms; }
+    .figma-page.reveals-ready .process-section-card:nth-child(2).is-visible,
+    .figma-page.reveals-ready .process-section-card:nth-child(4).is-visible { transition-delay: 200ms; }
+    .figma-page.reveals-ready .process-section-card:nth-child(3).is-visible { transition-delay: 0s; }
   }
 
   @media (max-width: 600px) {
-    .process-section-card:nth-child(n).is-visible { animation-delay: 0ms; }
-  }
-
-  @keyframes reveal-rise {
-    from { opacity: .55; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes reveal-image-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes reveal-project {
-    from { opacity: .45; clip-path: inset(0 0 24% 0 round 9px); transform: translateY(24px) scale(.98); }
-    to { opacity: 1; clip-path: inset(0 0 0 0 round 9px); transform: translateY(0) scale(1); }
-  }
-
-  @keyframes reveal-step {
-    from { opacity: 0; transform: translateY(48px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes reveal-soft {
-    from { opacity: .8; }
-    to { opacity: 1; }
+    .figma-page.reveals-ready .process-section-card:nth-child(n).is-visible { transition-delay: 0s; }
   }
 }
 
@@ -528,7 +520,15 @@ main > section[id] {
   .header-cta { min-height: 44px; padding: 8px 10px; font-size: 13px; }
   .menu-toggle { width: 44px; height: 44px; }
   .hero-section { padding: 74px 20px 90px; }
-  .hero-section::before { background-size: auto 100%; background-position: center bottom; }
+  .hero-section::before {
+    background-image: url('/figma/updated/hero-wave-mobile.webp');
+    background-size: auto 100%;
+    background-position: center bottom;
+  }
+  .problem-section.is-near {
+    background-image: url('/figma/updated/problem-background-mobile.webp');
+    background-image: image-set(url('/figma/updated/problem-background-mobile.avif') type('image/avif'), url('/figma/updated/problem-background-mobile.webp') type('image/webp'));
+  }
   .hero-eyebrow,
   .contact-eyebrow { font-size: 12px; }
   .hero-content h1 { font-size: clamp(31px, 8vw, 44px); line-height: 1.2; }

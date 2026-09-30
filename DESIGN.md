@@ -11,22 +11,22 @@ colors:
   rule: "#e8e8e8"
 typography:
   display:
-    fontFamily: "Jadidulu SF Pro Display, Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "SF Pro Display, SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "48px"
     fontWeight: 700
     lineHeight: 1.25
   headline:
-    fontFamily: "Jadidulu SF Pro Display, Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "SF Pro Display, SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "36px"
     fontWeight: 700
     lineHeight: 1.25
   body:
-    fontFamily: "Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "18px"
     fontWeight: 500
     lineHeight: 1.5
   label:
-    fontFamily: "Jadidulu SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+    fontFamily: "SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
     fontSize: "15px"
     fontWeight: 700
     lineHeight: 1.5
@@ -75,7 +75,7 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 - Blue action and emphasis colors against white and warm-white surfaces.
 - Self-hosted SF Pro Display for headings and SF Pro Text for body copy and controls.
 - Figma-exported illustrations and background waves rather than substitute graphics.
-- The black Figma-exported Jadidulu SVG logo in both header and footer replaces the older blue mark; its mark appears in the PNG favicon.
+- The black Figma-exported Jadidulu SVG logo in both header and footer replaces the older blue mark; its shaded mark appears in the SVG favicon via an embedded WebP image.
 
 ## Colors
 
@@ -90,11 +90,11 @@ The page is mostly flat and spacious. The artwork provides depth, while typograp
 - **Warm Paper** (`warm-paper`): Solution section and footer.
 - **Quiet Rule** (`rule`): FAQ dividers.
 
-**The Exported Background Rule.** Planning blue, hero wave, portfolio waves, and closing pastel gradient come from their Figma PNGs rather than palette-derived CSS gradients.
+**The Exported Background Rule.** Planning blue, hero wave, portfolio waves, and closing pastel gradient come from their Figma artwork rather than palette-derived CSS gradients.
 
 ## Typography
 
-**Site font:** Locally served SF Pro Text (regular, medium, semibold, bold, heavy) and SF Pro Display (bold) from [sahibjotsaggu/San-Francisco-Pro-Fonts](https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts) in `public/fonts/`. These files are not licensed for web distribution under [Apple's SF Pro terms](https://developer.apple.com/fonts/); deployment carries a licensing risk. System fonts remain fallbacks if a font fails to load.
+**Site font:** Six locally served subset WOFF2 faces: SF Pro Display bold (hero/headings) and SF Pro Text regular, medium, semibold, bold, and heavy (body/UI) from [sahibjotsaggu/San-Francisco-Pro-Fonts](https://github.com/sahibjotsaggu/San-Francisco-Pro-Fonts) in `public/fonts/`. The subsets cover the site's Latin copy, Latin-1, and Latin Extended-A; other scripts use system fallbacks. Only Display bold is preloaded. These files are not licensed for web distribution under [Apple's SF Pro terms](https://developer.apple.com/fonts/); deployment carries a licensing risk.
 
 ### Hierarchy
 - **Display** (`display`): Hero and closing invitation.

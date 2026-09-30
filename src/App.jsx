@@ -1,33 +1,49 @@
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { SplitText } from 'gsap/SplitText';
-import { useEffect, useState } from 'react';
-import { ChevronRight, Menu, X } from 'lucide-react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ProcessSection from './components/ProcessSection';
 import PortfolioSection from './components/PortfolioSection';
 import FaqSection from './components/FaqSection';
 import './App.css';
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+gsap.registerPlugin(SplitText);
 
 const image = (name) => `/figma/updated/${name}`;
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const smootherRef = useRef(null);
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    const sections = document.querySelectorAll('.problem-section, .portfolio-section, .contact-section');
+    if (!('IntersectionObserver' in window)) {
+      sections.forEach((section) => section.classList.add('is-near'));
+      return;
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
+        entry.target.classList.toggle('is-near', entry.isIntersecting);
+      });
+    }, { rootMargin: '300px 0px' });
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+  useLayoutEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+
+    const page = document.querySelector('.figma-page');
+    page.classList.add('reveals-ready');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
 
     document.querySelectorAll('[data-scroll-reveal]').forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      page.classList.remove('reveals-ready');
+    };
   }, []);
 
   useEffect(() => {
@@ -44,21 +60,21 @@ function App() {
       let stopped = false;
       let observer;
       const splits = [];
+      const buttons = [];
       release = () => {
         stopped = true;
         observer?.disconnect();
         splits.forEach((split) => split.revert());
+        buttons.forEach((button) => gsap.set(button, { clearProps: 'transform,opacity,visibility' }));
       };
 
       document.fonts.ready.then(() => {
         if (stopped) return;
 
-        const play = new Map();
+        const setVisibility = new Map();
         observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            play.get(entry.target)();
-            observer.unobserve(entry.target);
+            setVisibility.get(entry.target)(entry.isIntersecting);
           });
         }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
 
@@ -69,9 +85,9 @@ function App() {
         ].forEach(([selector, text, action]) => {
           const section = document.querySelector(selector);
           const button = action ? section.querySelector(action) : null;
-          let entered = false;
+          if (button) buttons.push(button);
+          let visible = false;
           let timeline;
-          let start;
           const split = SplitText.create(section.querySelectorAll(text), {
             type: 'lines',
             tag: 'span',
@@ -80,6 +96,8 @@ function App() {
             aria: 'none',
             autoSplit: true,
             onSplit: ({ lines }) => {
+              gsap.set(lines, { xPercent: -100, autoAlpha: 0 });
+              if (button) gsap.set(button, { x: -70, autoAlpha: 0 });
               timeline = gsap.timeline({ paused: true }).to(lines, {
                 xPercent: 0,
                 autoAlpha: 1,
@@ -95,19 +113,16 @@ function App() {
                   ease: 'power1.inOut',
                 }, '>-0.5');
               }
-              start = () => {
-                gsap.set(lines, { xPercent: -100, autoAlpha: 0 });
-                if (button) gsap.set(button, { x: -70, autoAlpha: 0 });
-                timeline.play();
-              };
-              if (entered) start();
+              if (visible) timeline.play();
               return timeline;
             },
           });
           splits.push(split);
-          play.set(section, () => {
-            entered = true;
-            start();
+          setVisibility.set(section, (isVisible) => {
+            if (visible === isVisible) return;
+            visible = isVisible;
+            if (isVisible) timeline.timeScale(1).play();
+            else timeline.timeScale(2).reverse();
           });
           observer.observe(section);
         });
@@ -123,77 +138,36 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Keep native touch scrolling and honor reduced-motion; only fine-pointer
-    // desktop scrolling needs ScrollSmoother's transformed content.
+    // ScrollSmoother is desktop-only; mobile keeps native touch scrolling.
     const media = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
-    let smoother;
-    let heroMotion;
-    let hashFrame;
-
-    const alignHash = () => {
-      hashFrame = requestAnimationFrame(() => {
-        hashFrame = requestAnimationFrame(() => {
-          const target = document.getElementById(window.location.hash.slice(1));
-          if (target && smoother) smoother.scrollTo(target, false, 'top 84px');
-        });
-      });
-    };
+    let release;
+    let generation = 0;
 
     const updateSmoother = () => {
-      cancelAnimationFrame(hashFrame);
-      window.removeEventListener('load', alignHash);
-      heroMotion?.revert();
-      smoother?.kill();
-      smoother = undefined;
-      document.documentElement.style.scrollBehavior = '';
-      document.querySelector('.figma-page').classList.toggle('smooth-active', media.matches);
+      generation += 1;
+      const current = generation;
+      release?.();
+      release = undefined;
+      if (!media.matches) return;
 
-      if (media.matches) {
-        document.documentElement.style.scrollBehavior = 'auto';
-        smoother = ScrollSmoother.create({
-          wrapper: '#smooth-wrapper',
-          content: '#smooth-content',
-          smooth: 1,
-          smoothTouch: 0,
-        });
-        heroMotion = gsap.context(() => {
-          gsap.to('.hero-content', {
-            y: -48,
-            opacity: 0.45,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '.hero-section',
-              start: 'top top+=84',
-              end: 'bottom top+=84',
-              scrub: true,
-            },
-          });
-        });
-
-        // Wait until native hash restoration completes before aligning through GSAP.
-        if (window.location.hash) {
-          if (document.readyState === 'complete') alignHash();
-          else window.addEventListener('load', alignHash, { once: true });
-        }
-      }
+      import('./desktopMotion').then(({ startDesktopMotion }) => {
+        if (current !== generation) return;
+        release = startDesktopMotion((smoother) => { smootherRef.current = smoother; });
+      });
     };
 
     updateSmoother();
     media.addEventListener('change', updateSmoother);
     return () => {
       media.removeEventListener('change', updateSmoother);
-      window.removeEventListener('load', alignHash);
-      cancelAnimationFrame(hashFrame);
-      heroMotion?.revert();
-      smoother?.kill();
-      document.documentElement.style.scrollBehavior = '';
-      document.querySelector('.figma-page').classList.remove('smooth-active');
+      generation += 1;
+      release?.();
     };
   }, []);
 
   const handleAnchorClick = (event) => {
     const link = event.target.closest('a[href^="#"]');
-    const smoother = ScrollSmoother.get();
+    const smoother = smootherRef.current;
     if (!link || !smoother) return;
 
     const hash = link.getAttribute('href');
@@ -210,7 +184,7 @@ function App() {
     <div className="figma-page" onClickCapture={handleAnchorClick}>
       <header className="site-header" id="top">
         <a className="site-logo" href="#top" aria-label="Jadidulu home">
-          <img src={image('logo.svg')} alt="jadidulu" />
+          <img src={image('logo.svg')} alt="jadidulu" width="548" height="139" />
         </a>
         <nav className={`site-nav${menuOpen ? ' is-open' : ''}`} id="site-nav" aria-label="Main navigation">
           <a href="#about" onClick={() => setMenuOpen(false)}>About Us</a>
@@ -227,7 +201,13 @@ function App() {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((open) => !open)}
         >
-          {menuOpen ? <X size={23} /> : <Menu size={23} />}
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            {menuOpen ? (
+              <path d="M18 6 6 18M6 6l12 12" />
+            ) : (
+              <path d="M4 5h16M4 12h16M4 19h16" />
+            )}
+          </svg>
         </button>
       </header>
 
@@ -257,7 +237,12 @@ function App() {
             <p className="problem-eyebrow">Still Stuck in Planning?</p>
             <h2 id="problem-title">You Have the Idea. But It Still Feels Too Unclear to Build.</h2>
             <p>You’ve spent time thinking it through, discussing it, and trying to move it forward. But the idea still feels too uncertain to confidently take the next step. What’s getting in the way?</p>
-            <button type="button" className="problem-link">See What’s Missing <ChevronRight size={17} aria-hidden="true" /></button>
+            <button type="button" className="problem-link">
+              See What’s Missing
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
           </div>
         </section>
 
@@ -268,7 +253,11 @@ function App() {
               <p>Tell us what you want to build or the problem you want to solve. We’ll help turn it into a clear product direction, user flow, and clickable prototype you can test and validate before committing to development.</p>
               <p className="solution-emphasis">And when the direction is clear enough, we can help take it further into a working product.</p>
             </div>
-            <img className="solution-image" data-scroll-reveal="image-up" src={image('solution-illustration.png')} alt="An idea becoming a product flow and a clickable prototype" loading="lazy" />
+            <img className="solution-image" data-scroll-reveal="image-up"
+              src={image('solution-illustration-640.webp')}
+              srcSet={`${image('solution-illustration-640.webp')} 640w, ${image('solution-illustration-1200.webp')} 1200w`}
+              sizes="(max-width: 680px) calc(100vw - 40px), (max-width: 900px) calc(100vw - 64px), 570px"
+              width="1200" height="800" alt="An idea becoming a product flow and a clickable prototype" loading="lazy" />
           </div>
         </section>
 
@@ -293,7 +282,7 @@ function App() {
 
       <footer className="site-footer">
         <a className="footer-logo" href="#top" aria-label="Jadidulu home">
-          <img src={image('logo.svg')} alt="jadidulu" />
+          <img src={image('logo.svg')} alt="jadidulu" width="548" height="139" loading="lazy" />
         </a>
         <nav className="footer-nav" aria-label="Footer navigation">
           <a href="#about">About</a>

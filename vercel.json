@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/figma/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
+      ]
+    },
+    {
+      "source": "/favicon.svg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
+      ]
+    }
+  ]
+}

@@ -1,273 +1,56 @@
-/* ==========================================================================
-   SF Pro Display (Headings, Display, Accents)
-   ========================================================================== */
-
+/* SF Pro Display for headlines; SF Pro Text for body copy and controls. */
 @font-face {
   font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-Regular.otf') format('opentype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-Medium.otf') format('opentype');
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Text-Semibold.otf') format('opentype');
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-SemiboldItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+  src: url('/fonts/SF-Pro-Display-Bold-latin.woff2') format('woff2');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Text-Heavy.otf') format('opentype');
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-HeavyItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 800;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-BlackItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-LightItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-UltralightItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 200;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-ThinItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 100;
-  font-display: swap;
-}
-
-/* ==========================================================================
-   SF Pro Text (Body, Paragraphs, UI Text)
-   ========================================================================== */
-
-@font-face {
-  font-family: 'SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Regular.otf') format('opentype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
+  unicode-range: U+0020-00FF, U+0100-017F, U+0300-036F, U+2000-206F, U+20AC, U+2122, U+2190-2193, U+2212;
 }
 
 @font-face {
   font-family: 'SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Medium.otf') format('opentype');
+  src: url('/fonts/SF-Pro-Text-Regular-latin.woff2') format('woff2');
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-display: swap;
+  unicode-range: U+0020-00FF, U+0100-017F, U+0300-036F, U+2000-206F, U+20AC, U+2122, U+2190-2193, U+2212;
 }
 
 @font-face {
   font-family: 'SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Semibold.otf') format('opentype');
+  src: url('/fonts/SF-Pro-Text-Medium-latin.woff2') format('woff2');
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-display: swap;
+  unicode-range: U+0020-00FF, U+0100-017F, U+0300-036F, U+2000-206F, U+20AC, U+2122, U+2190-2193, U+2212;
 }
 
 @font-face {
   font-family: 'SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Bold.otf') format('opentype');
+  src: url('/fonts/SF-Pro-Text-Semibold-latin.woff2') format('woff2');
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-display: swap;
+  unicode-range: U+0020-00FF, U+0100-017F, U+0300-036F, U+2000-206F, U+20AC, U+2122, U+2190-2193, U+2212;
 }
 
 @font-face {
   font-family: 'SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Heavy.otf') format('opentype');
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-}
-
-/* ==========================================================================
-   SF Pro (Unified Family Aliases)
-   ========================================================================== */
-
-@font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Display-Regular.otf') format('opentype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Display-Medium.otf') format('opentype');
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Text-Semibold.otf') format('opentype');
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Display-SemiboldItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+  src: url('/fonts/SF-Pro-Text-Bold-latin.woff2') format('woff2');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
+  unicode-range: U+0020-00FF, U+0100-017F, U+0300-036F, U+2000-206F, U+20AC, U+2122, U+2190-2193, U+2212;
 }
 
 @font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Text-Heavy.otf') format('opentype');
+  font-family: 'SF Pro Text';
+  src: url('/fonts/SF-Pro-Text-Heavy-latin.woff2') format('woff2');
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Display-HeavyItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 800;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SF Pro';
-  src: url('/fonts/SF-Pro-Display-BlackItalic.otf') format('opentype');
-  font-style: italic;
-  font-weight: 900;
-  font-display: swap;
-}
-
-/* ==========================================================================
-   Backwards Compatibility: Jadidulu SF Pro Aliases
-   ========================================================================== */
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Regular.otf') format('opentype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Medium.otf') format('opentype');
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Semibold.otf') format('opentype');
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Bold.otf') format('opentype');
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Text';
-  src: url('/fonts/SF-Pro-Text-Heavy.otf') format('opentype');
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-Regular.otf') format('opentype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-Medium.otf') format('opentype');
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Jadidulu SF Pro Display';
-  src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
+  unicode-range: U+0020-00FF, U+0100-017F, U+0300-036F, U+2000-206F, U+20AC, U+2122, U+2190-2193, U+2212;
 }
 
 /* ==========================================================================
@@ -275,8 +58,8 @@
    ========================================================================== */
 
 :root {
-  --font-family-sans: 'SF Pro Text', 'SF Pro Display', 'SF Pro', 'Jadidulu SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-family-display: 'SF Pro Display', 'SF Pro', 'Jadidulu SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-sans: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-display: 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
   font-family: var(--font-family-sans);
   color: #141414;
